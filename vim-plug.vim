@@ -2,13 +2,19 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'connorholyday/vim-snazzy'
+
+" NERDTree
 Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 Plug 'dense-analysis/ale'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -23,8 +29,8 @@ colorscheme snazzy
 noremap ff :NERDTreeToggle<CR>
 
 " 修改箭头符号
-let g:NERDTreeDirArrowExpandable = '↠'
-let g:NERDTreeDirArrowCollapsible = '↡'
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 
 " vim 打开目录时自动开启NerdTree" 
 autocmd StdinReadPre * let s:std_in=1
@@ -130,11 +136,73 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" 回车不换行
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 
 let g:coc_global_extensions = [
             \ 'coc-json',
             \ 'coc-vimlsp',
             \ 'coc-marketplace',
-            \ 'coc-python',
+            \ 'coc-jedi',
+            \ 'coc-html',
+            \ 'coc-eslint',
+            \ 'coc-rome',
+            \ 'coc-phpls',
+            \ 'coc-sql',
+            \ 'coc-css'
             \]
 
+""""""""""""""""""""""""""""""""""""
+
+"" FZF.vim
+nmap <C-p> :Files<CR>
+nmap <C-e> :Buffers<CR>
+let g:fzf_action = { 'ctrl-e': 'edit' }
+
+
+
+" Ag
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+nnoremap <silent> <Leader>f :Ag<CR>
