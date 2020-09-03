@@ -70,5 +70,6 @@
             "name": "file",
             "expand": true
         }
-    ]
+    ],
+    "python.formatting.provider": "black"
 }

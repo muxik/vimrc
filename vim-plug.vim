@@ -32,14 +32,31 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " fzf 文件查找
 Plug 'junegunn/fzf.vim'
 
+" surround.vim 成对 添加、替换、删除 引号、括号 以及XML 标签 <cs>
+Plug 'tpope/vim-surround'
+
+" 成对插入或删除方括号，括号，引号。
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
+
 
 
 "----------------------------------"
 " vim-airline
 "----------------------------------"
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_theme='base16'
+"let g:airline#extensions#tabline#formatter = 'default'
+"let g:airline_theme='base16'
+let g:airline_theme="onedark"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = '✈'
+let g:airline_right_sep = '🍀'
+let g:airline_right_alt_sep = ''
 
 
 "----------------------------------"
@@ -210,10 +227,21 @@ let g:fzf_action = { 'ctrl-e': 'edit' }
 
 
 
+"----------------------------------"
 " Ag
+"----------------------------------"
+
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 nnoremap <silent> <Leader>f :Ag<CR>
+
+"----------------------------------"
+"auto-pairs
+"----------------------------------"
+let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
+
+
+
