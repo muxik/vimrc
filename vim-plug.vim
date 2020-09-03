@@ -1,19 +1,33 @@
 call plug#begin('~/.vim/plugged')
 
+" 底部状态栏
 Plug 'vim-airline/vim-airline'
+
+" snazz配色 插件
 Plug 'connorholyday/vim-snazzy'
 
-" NERDTree
+" NERDTree 树形目录以及增强插件
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-Plug 'dense-analysis/ale'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" ale 语法检查插件
+Plug 'dense-analysis/ale'
+
+" 缩进
 Plug 'Yggdroot/indentLine'
+
+" js语法高亮
 Plug 'jelera/vim-javascript-syntax'
+
+" html emmet
 Plug 'mattn/emmet-vim'
+
+" coc-vim 可以像vscode一样使用vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" fzf 文件查找
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
@@ -24,8 +38,9 @@ call plug#end()
 colorscheme snazzy
 "let g:SnazzyTransparent = 1
 
-""""""""""""""""""""""""""""""""""""
-"" NERDTree
+"----------------------------------"
+" NERDTree
+"----------------------------------"
 noremap ff :NERDTreeToggle<CR>
 
 " 修改箭头符号
@@ -43,9 +58,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == ""
 " 当只剩下NERDTree 时关闭Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-""""""""""""""""""""""""""""""""""""
 
-"" NERDTree-git
+"" NERDTree-git 对git状态支持
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'✹',
                 \ 'Staged'    :'✚',
@@ -59,10 +73,9 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unknown'   :'?',
                 \ }
 
-
-""""""""""""""""""""""""""""""""""""
-
-"" ALE
+"----------------------------------"
+" ALE
+"----------------------------------"
 
 let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
@@ -85,45 +98,30 @@ let g:ale_sign_error = ">>"
 let g:ale_sign_warning = "--"
 map <F7> ::ALEToggle<CR>
 
-
-""""""""""""""""""""""""""""""""""""
-
-"" indentLine
-" Vim
-" let g:indentLine_color_term = 239
+"----------------------------------"
+" indentLine
+"----------------------------------"
 
 " none X terminal
 let g:indentLine_color_tty_light = 7 " (default: 4)
 let g:indentLine_color_dark = 1 " (default: 2)
 
-" Background (Vim, GVim)
-"let g:indentLine_bgcolor_term = 202
-"let g:indentLine_bgcolor_gui = '#FF5F00'
 
 
-""""""""""""""""""""""""""""""""""""
-
-"" Emmet-vim
+"----------------------------------"
+" Emmet-vim
+"----------------------------------"
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 let g:user_emmet_leader_key='<C-Z>'
 
 
-""""""""""""""""""""""""""""""""""""
-
-"" coc.nvim
+"----------------------------------"
+" coc.nvim
+"----------------------------------"
 
 set hidden
 set updatetime=100
-
-
-" if has("patch-8.1.1564")
-"   " Recently vim can merge signcolumn and number column into one
-"   set signcolumn=number
-" else
-"   set signcolumn=yes
-" endif
-
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -190,9 +188,11 @@ let g:coc_global_extensions = [
             \ 'coc-css'
             \]
 
-""""""""""""""""""""""""""""""""""""
 
+"----------------------------------"
 "" FZF.vim
+"----------------------------------"
+
 nmap <C-p> :Files<CR>
 nmap <C-e> :Buffers<CR>
 let g:fzf_action = { 'ctrl-e': 'edit' }
