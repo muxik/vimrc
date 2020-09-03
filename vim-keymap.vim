@@ -67,3 +67,15 @@ noremap <silent><leader>0 10gt<cr>
 "---------------------------------"
 noremap W 5j
 noremap E 5k
+
+"---------------------------------"
+" 设置 CTRL+HJKL 移动光标
+"---------------------------------"
+noremap <C-h> <left>
+noremap <C-j> <down>
+noremap <C-k> <up>
+noremap <C-l> <right>
+inoremap <C-h> <left>
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-l> <right>

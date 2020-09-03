@@ -209,8 +209,6 @@ let g:coc_global_extensions = [
             \ 'coc-marketplace',
             \ 'coc-jedi',
             \ 'coc-html',
-            \ 'coc-eslint',
-            \ 'coc-rome',
             \ 'coc-phpls',
             \ 'coc-sql',
             \ 'coc-css'
