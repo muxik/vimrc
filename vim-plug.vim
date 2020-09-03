@@ -2,6 +2,8 @@ call plug#begin('~/.vim/plugged')
 
 " 底部状态栏
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 
 " snazz配色 插件
 Plug 'connorholyday/vim-snazzy'
@@ -33,8 +35,17 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 
-""""""""""""""""""""""""""""""""""""
-"" vim-snazzy
+"----------------------------------"
+" vim-airline
+"----------------------------------"
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_theme='base16'
+
+
+"----------------------------------"
+" vim-snazzy
+"----------------------------------"
+
 colorscheme snazzy
 "let g:SnazzyTransparent = 1
 
