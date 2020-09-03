@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/srv/www/htdocs'
+let g:netrw_dirhist_2='/home/muxik/Downloads'
+let g:netrw_dirhist_3='/home/muxik/Downloads/qq-files'
+let g:netrw_dirhist_4='/home/muxik/Downloads/qq-files/669150007'
+let g:netrw_dirhist_5='/home/muxik/Downloads/qq-files/669150007/file_recv'
+let g:netrw_dirhist_6='/home/muxik/Downloads/qq-files/669150007/file_recv/thumb'
+let g:netrw_dirhist_7='/home/muxik/.vim'
