@@ -38,6 +38,9 @@ Plug 'tpope/vim-surround'
 " 成对插入或删除方括号，括号，引号。
 Plug 'jiangmiao/auto-pairs'
 
+" vim开始页面
+Plug 'mhinz/vim-startify'
+
 call plug#end()
 
 
@@ -76,12 +79,12 @@ let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 
 " vim 打开目录时自动开启NerdTree" 
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+ autocmd StdinReadPre * let s:std_in=1
+ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " 打开vim时如果未指定文件，在vim启动时自动打开NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
 
 " 当只剩下NERDTree 时关闭Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -211,7 +214,8 @@ let g:coc_global_extensions = [
             \ 'coc-html',
             \ 'coc-phpls',
             \ 'coc-sql',
-            \ 'coc-css'
+            \ 'coc-css',
+            \ 'coc-sh'
             \]
 
 
@@ -242,4 +246,41 @@ nnoremap <silent> <Leader>f :Ag<CR>
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 
 
+"----------------------------------"
+" vim-startify
+"----------------------------------"
 
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+let g:startify_lists = [
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+
+" Read ~/.NERDTreeBookmarks file and takes its second column
+"function! s:nerdtreeBookmarks()
+"    let bookmarks = systemlist("cut -d' ' -f 2 ~/.NERDTreeBookmarks")
+"    let bookmarks = bookmarks[0:-2] " Slices an empty last line
+"    return map(bookmarks, "{'line': v:val, 'path': v:val}")
+"endfunction
+"
+"let g:startify_lists = [
+"        \ { 'type': function('s:nerdtreeBookmarks'), 'header': ['   NERDTree Bookmarks']}
+"        \]
