@@ -31,8 +31,8 @@ set foldlevel=99
 set laststatus=2
 set autochdir
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-set list
-set listchars=tab:▸\ ,trail:◦
+" set list
+" set listchars=tab:▸\ ,trail:◦
 
 
 "---------------------------------"

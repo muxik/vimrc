@@ -22,10 +22,10 @@ git clone https://github.com/muxik/vimrc.git ~/.vim
 
 - nodejs (coc.vim需要)
 - npm (coc.vim需要)
-
 - nerdfonts(如果不安装会导致乱码，你可以修改配置文件让vim不依赖)
 - fzf (文件查找)
 - ag  (文档搜索)
+- clang(c/c++支持)
 
 ### PIP插件
 

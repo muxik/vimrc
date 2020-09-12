@@ -215,8 +215,9 @@ let g:coc_global_extensions = [
             \ 'coc-phpls',
             \ 'coc-sql',
             \ 'coc-css',
-            \ 'coc-sh'
-            \]
+            \ 'coc-sh',
+            \ 'coc-clangd'
+            \ ]
 
 
 "----------------------------------"
